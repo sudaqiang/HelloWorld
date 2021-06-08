@@ -52,13 +52,12 @@ jobs:
       - name: Run install-root
         run: echo Mock install-root
 
-      - name: upload-artifact
-        run: echo Mock upload-artifact
-        
-      - run: mkdir -p path/to/artifact
-
-      - run: echo someArtifact > path/to/artifact/rootArtifact.txt
-
+      - name: make-artifact
+        run: |
+          echo Mock make-artifact
+          mkdir -p path/to/artifact
+          echo someArtifact > path/to/artifact/rootArtifact.txt
+    
       - uses: actions/upload-artifact@master
         with:
           name: root-artifact

@@ -28,13 +28,13 @@ jobs:
       - name: Run "danger" script
         run: echo Mock danger
 
-      - name: Run check-git-changes
+      - name: check-git-changes
         run: echo Mock check-git-changes
 
-      - name: Run reconcile-config-check
+      - name: reconcile-config-check
         run: echo Mock reconcile-config-check
 
-      - name: Run sonarqube
+      - name: sonarqube
         run: echo Mock sonarqube
         
   root:
@@ -46,10 +46,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Run npm-auth-root-folder
+      - name: npm-auth-root-folder
         run: echo Mock npm-auth-root-folder
 
-      - name: Run install-root
+      - name: install-root
         run: echo Mock install-root
 
       - name: make-artifact
@@ -63,6 +63,32 @@ jobs:
           name: root-artifact
           path: path/to/rootArtifact
         
+  common:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: npm-auth-common-folder
+        run: echo Mock npm-auth-common-folder
+
+      - name: install-common
+        run: echo Mock install-root
+
+      - name: make-artifact
+        run: |
+          echo Mock make-artifact
+          mkdir -p path/to/commonArtifact
+          echo someCommonArtifact > path/to/commonArtifact/commonArtifact.txt
+    
+      - uses: actions/upload-artifact@master
+        with:
+          name: common-artifact
+          path: path/to/commonArtifact
+        
   main:
     needs: root
     # The type of runner that the job will run on
@@ -73,10 +99,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Run npm-auth-webapp-folder
+      - name: npm-auth-webapp-folder
         run: echo Mock npm-auth-webapp-folder
 
-      - name: Run install-webapp
+      - name: install-webapp
         run: echo Mock install-webapp
 
       - name: make-artifact
@@ -97,4 +123,5 @@ jobs:
           name: root-artifact
           path: path/to/rootArtifact
 
-      - run: cat path/to/rootArtifact/rootArtifact.txt
+      - name: check rootArtifact
+        run: cat path/to/rootArtifact/rootArtifact.txt

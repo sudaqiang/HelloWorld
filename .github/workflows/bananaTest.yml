@@ -64,6 +64,7 @@ jobs:
           path: path/to/rootArtifact
         
   main:
+    needs: root
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -84,11 +85,13 @@ jobs:
           mkdir -p path/to/appArtifact
           echo someAppArtifact > path/to/appArtifact/appArtifact.txt
     
+      # upload
       - uses: actions/upload-artifact@master
         with:
           name: app-artifact
           path: path/to/appArtifact
 
+      # download
       - uses: actions/download-artifact@master
         with:
           name: root-artifact

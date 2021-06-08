@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Banana Testing CI
 
 # Controls when the action will run. 
 on:
@@ -54,3 +54,12 @@ jobs:
 
       - name: upload-artifact
         run: echo Mock upload-artifact
+        
+      - run: mkdir -p path/to/artifact
+
+      - run: echo someArtifact > path/to/artifact/rootArtifact.txt
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: root-artifact
+          path: path/to/artifact

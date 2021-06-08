@@ -55,10 +55,43 @@ jobs:
       - name: make-artifact
         run: |
           echo Mock make-artifact
-          mkdir -p path/to/artifact
-          echo someArtifact > path/to/artifact/rootArtifact.txt
+          mkdir -p path/to/rootArtifact
+          echo someRootArtifact > path/to/rootArtifact/rootArtifact.txt
     
       - uses: actions/upload-artifact@master
         with:
           name: root-artifact
-          path: path/to/artifact
+          path: path/to/rootArtifact
+        
+  root:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Run npm-auth-webapp-folder
+        run: echo Mock npm-auth-webapp-folder
+
+      - name: Run install-webapp
+        run: echo Mock install-webapp
+
+      - name: make-artifact
+        run: |
+          echo Mock make-artifact
+          mkdir -p path/to/appArtifact
+          echo someAppArtifact > path/to/appArtifact/appArtifact.txt
+    
+      - uses: actions/upload-artifact@master
+        with:
+          name: app-artifact
+          path: path/to/appArtifact
+
+      - uses: actions/download-artifact@master
+        with:
+          name: root-artifact
+          path: path/to/rootArtifact
+
+      - run: cat path/to/rootArtifact/rootArtifact.txt
